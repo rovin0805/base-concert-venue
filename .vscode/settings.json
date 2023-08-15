@@ -15,5 +15,7 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "editor.tabSize": 2,
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "typescript.enablePromptUseWorkspaceTsdk": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
