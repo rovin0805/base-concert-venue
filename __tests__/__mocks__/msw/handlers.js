@@ -8,9 +8,13 @@ const reservationHandler = rest.get(
   `${BASE_URL}/shows/:showId`,
   async (req, res, ctx) => {
     const { fakeShows } = await readFakeData();
+    const { showId } = req.params;
+
+    // index / showId = 0 has seats available in fake data
+    // index / howId = 1 has no seats available in fake data
     return res(
       ctx.json({
-        show: fakeShows[0],
+        show: fakeShows[+showId],
       })
     );
   }
