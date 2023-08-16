@@ -1,8 +1,11 @@
 import { rest } from 'msw';
 import { readFakeData } from '../fakeData';
+import { fakeUserReservations } from '../fakeData/userReservations';
+
+const BASE_URL = 'http://localhost:3000/api';
 
 const reservationHandler = rest.get(
-  'http://localhost:3000/api/shows/:showId',
+  `${BASE_URL}/shows/:showId`,
   async (req, res, ctx) => {
     const { fakeShows } = await readFakeData();
     return res(
@@ -13,4 +16,15 @@ const reservationHandler = rest.get(
   }
 );
 
-export const handlers = [reservationHandler];
+const userReservationsHandler = rest.get(
+  `${BASE_URL}/users/:userId/reservations`,
+  (req, res, ctx) => {
+    return res(
+      ctx.json({
+        userReservations: fakeUserReservations,
+      })
+    );
+  }
+);
+
+export const handlers = [reservationHandler, userReservationsHandler];
