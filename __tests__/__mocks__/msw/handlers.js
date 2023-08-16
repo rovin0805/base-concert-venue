@@ -23,9 +23,11 @@ const reservationHandler = rest.get(
 const userReservationsHandler = rest.get(
   `${BASE_URL}/users/:userId/reservations`,
   (req, res, ctx) => {
+    const { userId } = req.params;
+
     return res(
       ctx.json({
-        userReservations: fakeUserReservations,
+        userReservations: +userId === 1 ? fakeUserReservations : [],
       })
     );
   }
