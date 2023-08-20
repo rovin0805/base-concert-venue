@@ -13,3 +13,15 @@ describe('Static routes', () => {
     );
   });
 });
+
+describe('Dynamic routes', () => {
+  it('displays correct band name for a /bands/:id route that existed at build time', () => {
+    cy.task('resetDB').visit('/bands/1');
+    cy.findByRole('heading', { name: /Shamrock Pete/i }).should('exist');
+  });
+
+  it('displays error for a band not in db', () => {
+    cy.task('resetDB').visit('/bands/999');
+    cy.findByRole('heading', { name: /band not found/i }).should('exist');
+  });
+});
