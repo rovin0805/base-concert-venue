@@ -1,3 +1,6 @@
+import { generateRandomId } from '../../lib/features/reservations/utils';
+import { generateNewBand } from '../../__tests__/__mocks__/fakeData/newBand';
+
 describe('Static routes', () => {
   it('displays correct heading when navigating /shows route', () => {
     cy.visit('/');
@@ -23,5 +26,14 @@ describe('Dynamic routes', () => {
   it('displays error for a band not in db', () => {
     cy.task('resetDB').visit('/bands/999');
     cy.findByRole('heading', { name: /band not found/i }).should('exist');
+  });
+});
+
+describe('Routes created after build', () => {
+  it('displays a name for a band that was not present at build time', () => {
+    const bandId = generateRandomId();
+    const newBand = generateNewBand(bandId);
+    cy.task('resetDB').task('addBand', newBand).visit(`/bands/${bandId}`);
+    cy.findByRole('heading', { name: newBand.name }).should('exist');
   });
 });
