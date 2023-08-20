@@ -3,9 +3,9 @@ import { readFakeData } from '../../fakeData';
 
 export const resetDB = async () => {
   // failsafe against resetting production db
-  const safeToReset = process.env.NODE_ENV === 'test';
+  const safeToReset = process.env.NODE_ENV === 'test' || process.env.CYPRESS;
   if (!safeToReset) {
-    console.log('WARNING: db reset unavailable outside test environment');
+    console.log('⚠️ WARNING: db reset unavailable outside test environment');
     return;
   }
 
