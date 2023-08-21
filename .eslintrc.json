@@ -4,7 +4,8 @@
     "airbnb",
     "prettier",
     "next",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:cypress/recommended"
   ],
   "plugins": [
     "testing-library",
@@ -13,7 +14,8 @@
     "simple-import-sort",
     "prettier",
     "react-hooks",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "cypress"
   ],
   "settings": {
     "import/resolver": {
