@@ -7,5 +7,6 @@ declare namespace Cypress {
      * @example cy.clickOnMyJourneyInCandidateCabinet()
      */
     resetDbAndIsrCache(): Chainable<null>;
+    signIn(email: string, password: string): Chainable<null>;
   }
 }
