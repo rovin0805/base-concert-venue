@@ -88,3 +88,13 @@ it('runs auth flow for protected page, including failed login in', () => {
   );
   cy.findByRole('button', { name: /sign out/i }).should('exist');
 });
+
+it('redirects to sign-in page for protected pages', () => {
+  cy.fixture('protected-pages.json').then((urls) => {
+    urls.forEach(($url) => {
+      cy.visit($url);
+      cy.findByLabelText(/email address/i).should('exist');
+      cy.findByLabelText(/password/i).should('exist');
+    });
+  });
+});
