@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress';
 import { addBand } from './lib/features/bands/queries';
 import { resetDB } from './__tests__/__mocks__/db/utils/reset-db';
+import { addReservation } from '@/lib/features/reservations/queries';
 
 export default defineConfig({
   e2e: {
@@ -18,6 +19,11 @@ export default defineConfig({
 
         addBand: (newBand) => {
           addBand(newBand);
+          return null;
+        },
+
+        addReservation: (newReservation) => {
+          addReservation(newReservation);
           return null;
         },
       });
