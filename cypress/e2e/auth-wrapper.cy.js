@@ -36,3 +36,55 @@ it('runs auth flow for successful login to protected reservation page', () => {
   // check that sign in button does not exist
   cy.findByRole('button', { name: /sign in/i }).should('not.exist');
 });
+
+it('runs auth flow for protected page, including failed login in', () => {
+  // visit user page
+  cy.task('resetDB').visit('/user');
+
+  // check for sign in form
+  cy.findByRole('heading', { name: /sign in to your account/i }).should(
+    'exist'
+  );
+
+  // check there is no welcome message
+  cy.findByRole('heading', { name: /welcome/i }).should('not.exist');
+
+  // fill out sign in form with env variable values, but wrong password
+  cy.findByLabelText(/email address/i)
+    .clear()
+    .type(Cypress.env('TEST_USER_EMAIL'));
+  cy.findByLabelText(/password/i)
+    .clear()
+    .type('wrongpassword');
+
+  // submit the form
+  cy.findByRole('main').within(() => {
+    cy.findByRole('button', { name: /sign in/i }).click();
+  });
+
+  // check for failure message
+  cy.findByText(/sign in failed/i).should('exist');
+
+  // fill out the sign in form with correct info
+  cy.findByLabelText(/email address/i)
+    .clear()
+    .type(Cypress.env('TEST_USER_EMAIL'));
+  cy.findByLabelText(/password/i)
+    .clear()
+    .type(Cypress.env('TEST_PASSWORD'));
+
+  // submit the form
+  cy.findByRole('main').within(() => {
+    cy.findByRole('button', { name: /sign in/i }).click();
+  });
+
+  // check that the use page now shows
+  cy.findByRole('heading', { name: /welcome/i }).should('exist');
+  cy.findByRole('heading', { name: /your tickets/i }).should('exist');
+
+  // check for user and sign-out button on nav bar
+  cy.findByRole('button', { name: Cypress.env('TEST_USER_EMAIL') }).should(
+    'exist'
+  );
+  cy.findByRole('button', { name: /sign out/i }).should('exist');
+});
